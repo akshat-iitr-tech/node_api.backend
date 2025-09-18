@@ -4,8 +4,9 @@ const app = express();
 app.use(express.json());
 
 let users: { id: number; name: string; job: string }[] = [
-  { id: 1, name: "Alice", job: "Engineer" },
-  { id: 2, name: "Bob", job: "Designer" }
+  { id: 1, name: "Akshat", job: "Student" },
+  { id: 2, name: "Abhinav", job: "Developer" },
+  { id: 3, name: "Aditya", job: "Engineer" }
 ];
 
 // GET all users
@@ -15,9 +16,11 @@ app.get("/users", (req: Request, res: Response) => {
 
 // POST create new user
 app.post("/users", (req: Request, res: Response) => {
-  const newUser = { id: users.length + 1, ...req.body };
+  console.log("reqbody777",req.body.job)
+  const highestId = Math.max(...users.map(user => user.id))
+  const newUser = { id: highestId + 1, ...req.body };
   users.push(newUser);
-  res.status(201).json(newUser);
+  res.status(201).json({status:true, data: newUser,message: "User added"});
 });
 
 // PUT update user
